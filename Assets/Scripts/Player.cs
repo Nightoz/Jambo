@@ -23,8 +23,11 @@ public class Player : MonoBehaviour
 
     }
 
-    
-    
+    private void Start()
+    {
+      
+    }
+
     private void Raycasting()
     {
         if (Physics.Raycast(rayTransform.position, rayTransform.forward, out var hit,1f))
