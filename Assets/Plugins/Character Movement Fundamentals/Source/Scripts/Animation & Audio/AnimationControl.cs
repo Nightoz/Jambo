@@ -12,11 +12,7 @@ namespace CMF
 		Transform animatorTransform;
 		Transform tr;
 
-		//Whether the character is using the strafing blend tree;
-		public bool useStrafeAnimations = false;
-
-		//Velocity threshold for landing animation;
-		//Animation will only be triggered if downward velocity exceeds this threshold;
+		
 		public float landVelocityThreshold = 5f;
 
 		private float smoothingFactor = 40f;
@@ -29,6 +25,8 @@ namespace CMF
 			animatorTransform = animator.transform;
 
 			tr = transform;
+			
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 
 		//OnEnable;
@@ -61,20 +59,10 @@ namespace CMF
 			_horizontalVelocity = Vector3.Lerp(oldMovementVelocity, _horizontalVelocity, smoothingFactor * Time.deltaTime);
 			oldMovementVelocity = _horizontalVelocity;
 
-			animator.SetFloat("VerticalSpeed", _verticalVelocity.magnitude * VectorMath.GetDotProduct(_verticalVelocity.normalized, tr.up));
-			animator.SetFloat("HorizontalSpeed", _horizontalVelocity.magnitude);
-
-			//If animator is strafing, split up horizontal velocity;
-			if(useStrafeAnimations)
-			{
-				Vector3 _localVelocity = animatorTransform.InverseTransformVector(_horizontalVelocity);
-				animator.SetFloat("ForwardSpeed", _localVelocity.z);
-				animator.SetFloat("StrafeSpeed", _localVelocity.x);
-			}
-
-			//Pass values to animator;
+			animator.SetFloat("VerticalSpeed", _verticalVelocity.magnitude,0.1f, Time.deltaTime);
+			animator.SetFloat("HorizontalSpeed", _horizontalVelocity.magnitude,0.1f, Time.deltaTime);
+			
 			animator.SetBool("IsGrounded", controller.IsGrounded());
-			animator.SetBool("IsStrafing", useStrafeAnimations);
 		}
 
 		void OnLand(Vector3 _v)
