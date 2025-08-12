@@ -11,6 +11,7 @@ public class Crane : MonoBehaviour
     public Vector2 craneRotX = new(0, 20);
     [Header("Events")]
     public UnityEvent craneEnter;
+    public UnityEvent craneExit;
     private Vector2 input;
     private bool isCrane = false;
     private float currentYRotation = 0f;
@@ -19,10 +20,11 @@ public class Crane : MonoBehaviour
     public Transform joystic;
     public Transform cran;
     public Transform Gruz;
-    
+    private Transform Player;
     
     private void OnTriggerEnter(Collider other)
     {
+        Player = other.transform;
         craneEnter.Invoke();
         isCrane = true;
     }
@@ -31,6 +33,13 @@ public class Crane : MonoBehaviour
     {
         if (!isCrane) return;
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isCrane = false;
+            Player.transform.position += Vector3.left ; 
+            craneExit.Invoke();
+        }
         if (input == Vector2.zero) return;
 
         CraneRotator();
@@ -40,6 +49,8 @@ public class Crane : MonoBehaviour
         JoysticRotate();
         
         Gruz.rotation = Quaternion.Euler(Gruz.transform.rotation.x, Gruz.transform.rotation.y, 90);
+
+        
     }
 
     private void CraneRotator()
