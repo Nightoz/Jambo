@@ -39,7 +39,7 @@ public class Crane : MonoBehaviour
 
         JoysticRotate();
         
-        Gruz.rotation = Quaternion.Euler(0f, 0f, 90);
+        Gruz.rotation = Quaternion.Euler(Gruz.transform.rotation.x, Gruz.transform.rotation.y, 90);
     }
 
     private void CraneRotator()
