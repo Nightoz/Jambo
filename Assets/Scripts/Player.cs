@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
     private void Raycasting()
     {
-        if (Physics.Raycast(rayTransform.position, rayTransform.forward, out var hit,1f))
+        if (Physics.Raycast(rayTransform.position, rayTransform.forward, out var hit,2f))
         { 
             finding.Invoke(hit.transform.name);
             if(currentRayTarget == null)

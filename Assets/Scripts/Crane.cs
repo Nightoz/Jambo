@@ -48,7 +48,7 @@ public class Crane : MonoBehaviour
 
         currentXRotation =  Mathf.Clamp(currentXRotation + deltaRotation, craneRotX.x, craneRotX.y);
         
-        cran.localRotation = Quaternion.Euler(currentXRotation, 0f, 90);
+        cran.localRotation = Quaternion.Euler(0, currentXRotation, 0);
     }
 
     private void CabinaRotater()
@@ -65,6 +65,6 @@ public class Crane : MonoBehaviour
         if (joystic == null) return;
         float tiltAroundX = input.y * 15;
         float tiltAroundZ = -input.x * 15;
-        joystic.localEulerAngles = new Vector3(tiltAroundX, 0f, tiltAroundZ);
+        joystic.eulerAngles = new Vector3(tiltAroundX, 0f, tiltAroundZ);
     }
 }
