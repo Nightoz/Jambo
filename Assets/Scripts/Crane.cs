@@ -10,8 +10,6 @@ public class Crane : MonoBehaviour
     public Vector2 craneRotY = new(-11, 11);
     public Vector2 craneRotX = new(0, 20);
     [Header("Events")]
-    public UnityEvent craneEnter;
-    public UnityEvent craneExit;
     private Vector2 input;
     private bool isCrane = false;
     private float currentYRotation = 0f;
@@ -22,24 +20,12 @@ public class Crane : MonoBehaviour
     public Transform Gruz;
     private Transform Player;
     
-    private void OnTriggerEnter(Collider other)
-    {
-        Player = other.transform;
-        craneEnter.Invoke();
-        isCrane = true;
-    }
 
     private void Update()
     {
         if (!isCrane) return;
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isCrane = false;
-            Player.transform.position += Vector3.left ; 
-            craneExit.Invoke();
-        }
+        
         if (input == Vector2.zero) return;
 
         CraneRotator();
